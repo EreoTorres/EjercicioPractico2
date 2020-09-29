@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { ValidTipoTextService } from '../servicios/validaciones/validTipoText/valid-tipo-text.service';
 import { ListprospectosService } from '../servicios/http-service/listprospectos/listprospectos.service';
+import { DetalleprospectoService } from '../servicios/http-service/detalleprospectos/detalleprospecto.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -15,7 +16,6 @@ export class DetalleprospectoComponent implements OnInit {
   faPlus = faPlus;
   formulario: FormGroup;
   titulo = "Nuevo Prospecto";
-  ItemsDocs: any = [];
   submitted: boolean = false
   estatusG: any = [];
   estatusEdit = 1;
@@ -25,6 +25,7 @@ export class DetalleprospectoComponent implements OnInit {
     public validText: ValidTipoTextService,
     private route: ActivatedRoute,
     public estadosHTTP: ListprospectosService,
+    public DetalleService: DetalleprospectoService,
   ) {  }
 
   ngOnInit(): void {
@@ -55,7 +56,7 @@ export class DetalleprospectoComponent implements OnInit {
       telefono: [null,Validators.required],
       rfc: [null,[Validators.required]],
       estatus: [this.estatusEdit,[Validators.required]],
-      observaciones: [null,[Validators.required]],
+      observaciones: [''],
       documentos: this.formBuilder.array([this.addItemsToFormDoc()])
     });
 
@@ -81,7 +82,7 @@ export class DetalleprospectoComponent implements OnInit {
       telefono: [params.telefono,Validators.required],
       rfc: [params.rfc,[Validators.required]],
       estatus: [estats,[Validators.required]],
-      observaciones: [params.observaciones,[Validators.required]],
+      observaciones: [params.observaciones],
       documentos: this.formBuilder.array([this.addItemsToFormDoc()])
     });
 
@@ -112,13 +113,15 @@ export class DetalleprospectoComponent implements OnInit {
       res = JSON.parse(res._body)
 
       if(res.codigo == 200){
-        for(let estatus of res.resultado){
-          if(estatus.id != 1){
-            this.estatusG.push(estatus)
+        if(this.estatusEdit != 1){
+          for(let estatus of res.resultado){
+            if(estatus.id != 1){
+              this.estatusG = estatus;
+            }
           }
+        }else{
+          this.estatusG = res.resultado;
         }
-
-        console.log(this.estatusG)
       }
     });
   }
@@ -130,22 +133,48 @@ export class DetalleprospectoComponent implements OnInit {
 
   addItemsToFormDoc(): FormGroup {
     return  this.formBuilder.group({
-      doc: [null,Validators.required],
-      docfile: [null,Validators.required]
+      nombredoc: [null,Validators.required],
+      base64: [null,Validators.required],
+      formato: [null,Validators.required]
     });
   }
 
   deleteItemDoc(id){
-    this.formulario.get('documentos')['controls'].splice(id,1);
-    this.formulario.get('documentos').updateValueAndValidity();
+    if(this.formulario.get('documentos')['controls'].length > 1){
+      this.formulario.get('documentos')['controls'].splice(id,1);
+      this.formulario.get('documentos').updateValueAndValidity();
+    }
   }
 
   get validaF() { return this.formulario.controls; }
   get validaFDocs() { return this.formulario.controls.documentos['controls']; }
 
+  handleUpload(event,index) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      var base64: any = reader.result;
+      var format = file.type.split('/')
+      
+      this.formulario.get('documentos')['controls'][index].controls.base64.setValue(base64.split(';base64,').pop())
+      this.formulario.get('documentos')['controls'][index].controls.formato.setValue(format[1])
+    };
+  }
+
   guardar(val) {
     this.submitted = true;
 
-    console.log(val)
+    if (this.formulario.valid) {
+      if(!val.estatus){
+        val.estatus = this.estatusEdit
+      }
+       
+      this.DetalleService.setProspecto(val).then(data => {
+        console.log(val.estatus)
+      });
+    } else {
+      console.log(val.estatus)
+    }
   }
 }

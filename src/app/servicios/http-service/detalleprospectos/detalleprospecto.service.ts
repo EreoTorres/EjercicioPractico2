@@ -8,22 +8,20 @@ import { environment } from 'src/environments/environment';
 export class DetalleprospectoService {
   public url = environment.apiURL;
   httpHeaders = new Headers({        
-      'Content-Type': 'application/x-www-form-urlencoded'
+    'Content-Type': 'application/json'
   });
 
   constructor(
     public http:Http,
   ) { }
 
-  getAyuda(){
+  setProspecto(prospecto){
     return new Promise((resolve, reject) => {
       let options = {
         headers: this.httpHeaders
       };
 
-      let parametros = JSON.stringify({valor:"val"});
-      
-      this.http.post(this.url + "ayuda.php",parametros,options)
+      this.http.post(this.url + "prospectos/setProspecto",prospecto,options)
       .subscribe(data => {
         resolve(data);
       })
