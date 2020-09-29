@@ -1,0 +1,30 @@
+.center-block {
+    float: none;
+    display: block;
+    margin: 0 auto;
+    /* margin-left: auto; margin-right: auto; */
+}
+
+.titulo{
+    text-align: center;
+}
+
+.label{
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.options{
+    text-align: center;
+    color: red;
+}
+
+.cancel{
+    position: absolute;
+    right:    0;
+    bottom:   0;
+}
+
+.botonaction{
+    width: 150px;
+}

@@ -1,0 +1,50 @@
+<div class="contentT">
+  <div class="titulo">
+    <h2>Lista de Prospectos</h2>
+  </div>
+  <div class="row">
+    <div class="col-9">
+      <a routerLink="/detalleprospecto">  
+        <button type="button" class="btn btn-success">Nuevo Prospecto</button>
+      </a>
+    </div>
+    <div class="col-3">
+      <select class="form-control" id="estatus" (change)="getProspectos($event.target.value)">
+        <option value="" selected>Todos</option>
+        <option *ngFor="let estatus of estatusG" value="{{estatus.nombre}}">{{estatus.nombre}}</option>
+      </select>
+    </div>
+  </div>
+  <div class="col-12" *ngIf="mensaje">
+    <table class="table table-hover">
+      <thead class="headerT">
+        <tr>
+          <th scope="col">{{mensaje}}</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+  <div *ngIf="prospectos && !mensaje">
+    <table class="table table-hover table-bordered">
+      <thead class="headerT">
+        <tr>
+          <th scope="col">Nombre del prospecto</th>
+          <th width="100">Estatus</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="itemP" *ngFor="let prospecto of prospectos | paginate: { itemsPerPage: 5, currentPage: pagination }; let i = index" (click)="editProspecto(prospecto)">
+          <td>{{prospecto.nombre}} {{prospecto.aApellido}} {{prospecto.sApellido}}</td>
+          <td [ngStyle]='{color: prospecto.color}'>{{prospecto.estatus}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="col-12 paginationp">
+      <pagination-controls 
+        (pageChange)="pagination = $event"
+        previousLabel="Anterior"
+        nextLabel="Siguiente"
+      ></pagination-controls>    
+    </div>
+  </div>
+</div>
