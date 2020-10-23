@@ -1,0 +1,25 @@
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
+  <mat-toolbar color="primary">
+    <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+    <span>TIENDA EN LINEA</span>
+    <span class="example-spacer"></span>
+    <div class="horas">
+      <span class="mishoras">{{hora}}:{{minutos}}</span>
+      <span class="ampm"> {{ampm}}</span>
+    </div>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+      <mat-nav-list *ngFor="let nav of fillerNav">
+        <a mat-list-item routerLink="/{{nav.path}}" *ngIf="nav.data.tipo == 'menu'"><mat-icon>{{nav.data.icon}}</mat-icon>{{nav.data.title}}</a>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <div class="contentP">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

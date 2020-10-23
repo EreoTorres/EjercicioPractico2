@@ -1,0 +1,48 @@
+<div class="contentT">
+    <div class="titulo">
+      <h2>Lista de Articulos</h2>
+    </div>
+    <div class="row">
+        <div class="col-md-3 offset-md-9">
+            <a routerLink="/narticulo">  
+            <button type="button" class="btn btn-success">Nueva Articulo</button>
+          </a>
+        </div>
+    </div>
+    <div>
+      <table class="table table-hover table-bordered">
+        <thead class="headerT">
+          <tr>
+            <th scope="col">Descripción</th>
+            <th scope="col">Modelo</th>            
+            <th width="200">Precio</th>
+            <th width="200">Existencia</th>            
+          </tr>
+        </thead>
+        <tbody *ngIf="articulos">
+          <tr class="itemP" *ngFor="let articulo of articulos | paginate: { itemsPerPage: 5, currentPage: pagination }; let i = index" (click)="editProspecto(articulo)">
+            <td>{{articulo.descripcion}}</td>
+            <td>{{articulo.modelo}}</td>
+            <td>{{articulo.precio}}</td>
+            <td>{{articulo.existencia}}</td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="!articulos">
+          <tr>
+            <td>--</td>
+            <td>--</td>
+            <td>--</td>
+            <td>--</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="col-12 paginationp">
+        <pagination-controls 
+          (pageChange)="pagination = $event"
+          previousLabel="Anterior"
+          nextLabel="Siguiente"
+        ></pagination-controls>    
+      </div>
+    </div>
+  </div>
+  

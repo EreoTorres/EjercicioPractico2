@@ -1,0 +1,42 @@
+<div class="contentT">
+    <div class="titulo">
+      <h2>Lista de Clientes</h2>
+    </div>
+    <div class="row">
+        <div class="col-md-3 offset-md-9">
+            <a routerLink="/ncliente">  
+            <button type="button" class="btn btn-success">Nueva Cliente</button>
+          </a>
+        </div>
+    </div>
+    <div>
+      <table class="table table-hover table-bordered">
+        <thead class="headerT">
+          <tr>
+            <th scope="col">Nombre</th>
+            <th width="200">RFC</th>            
+          </tr>
+        </thead>
+        <tbody *ngIf="clientes">
+          <tr class="itemP" *ngFor="let prospecto of clientes | paginate: { itemsPerPage: 5, currentPage: pagination }; let i = index" (click)="editCliente(prospecto)">
+            <td>{{prospecto.nombre}} {{prospecto.pApellido}} {{prospecto.mApellido}}</td>
+            <td>{{prospecto.rfc}}</td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="!clientes">
+          <tr>
+            <td>--</td>
+            <td>--</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="col-12 paginationp">
+        <pagination-controls 
+          (pageChange)="pagination = $event"
+          previousLabel="Anterior"
+          nextLabel="Siguiente"
+        ></pagination-controls>    
+      </div>
+    </div>
+  </div>
+  

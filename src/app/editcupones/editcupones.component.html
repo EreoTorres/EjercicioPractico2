@@ -1,0 +1,46 @@
+<div class="container" >
+    <div class="row">
+        <div class="col-12 titulo">
+            <h2>{{titulo}}</h2>
+        </div>
+        <div class="center-block col-8">
+            <form #formul = "ngForm" (ngSubmit)="guardar(formul.value)" id="formul" [formGroup]="formulario">
+                <div class="form-group">
+                    <label for="codigo">Codigo*</label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="codigo" 
+                        placeholder="Codigo" 
+                        formControlName="codigo" 
+                        [ngClass]="{ 'is-invalid active': submitted && validaF.codigo.errors }"
+                    >
+                </div>
+                <div class="form-group">
+                    <label for="tipo">Tipo</label>
+                    <select class="form-control" id="tipo" [ngClass]="{ 'is-invalid active': submitted && validaF.tipo.errors }" formControlName="tipo">
+                      <option value="Porcentaje">Porcentaje</option>
+                      <option value="Monto">Monto</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="descuento">Descuento*</label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="descuento" 
+                        placeholder="Descuento" 
+                        formControlName="descuento" 
+                        [ngClass]="{ 'is-invalid active': submitted && validaF.descuento.errors }"
+                    >
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-success botonaction">Guardar</button>
+                    <a routerLink="/cupones">  
+                        <button type="button" class="btn btn-danger float-right botonaction">Cancelar</button>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

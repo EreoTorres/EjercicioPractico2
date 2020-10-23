@@ -1,0 +1,66 @@
+<div class="container" >
+    <div class="row">
+        <div class="col-12 titulo">
+            <h2>{{titulo}}</h2>
+        </div>
+        <div class="center-block col-8">
+            <form #formul = "ngForm" (ngSubmit)="guardar(formul.value)" id="formul" [formGroup]="formulario">
+                <div class="form-group">
+                    <label for="nombre">Nombre*</label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="nombre" 
+                        placeholder="Nombre" 
+                        formControlName="nombre" 
+                        (keypress)="validText.onlyTextKey($event)"
+                        [ngClass]="{ 'is-invalid active': submitted && validaF.nombre.errors }"
+                    >
+                </div>
+                <div class="form-group">
+                    <label for="pApellido">Primer apellido*</label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="pApellido" 
+                        placeholder="Apellido" 
+                        formControlName="pApellido" 
+                        (keypress)="validText.onlyTextKey($event)"
+                        [ngClass]="{ 'is-invalid active': submitted && validaF.pApellido.errors }"
+                    >
+                </div>
+                <div class="form-group">
+                    <label for="mApellido">Segundo apellido</label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="mApellido" 
+                        placeholder="Apellido" 
+                        formControlName="mApellido" 
+                        (keypress)="validText.onlyTextKey($event)"
+                        [ngClass]="{ 'is-invalid active': submitted && validaF.mApellido.errors }"
+                    >
+                </div>
+                <div class="form-group">
+                    <label for="rfc">RFC*</label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="rfc"
+                        placeholder="RFC" 
+                        formControlName="rfc" 
+                        (keypress)="validText.onlyTextKey($event)"
+                        [ngClass]="{ 'is-invalid active': submitted && validaF.rfc.errors }"
+                        maxlength="13"
+                    >
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-success botonaction">Guardar</button>
+                    <a routerLink="/clientes">  
+                        <button type="button" class="btn btn-danger float-right botonaction">Cancelar</button>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

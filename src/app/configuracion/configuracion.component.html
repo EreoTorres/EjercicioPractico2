@@ -1,0 +1,25 @@
+<div class="container" >
+    <div class="row">
+        <div class="col-12 titulo">
+            <h2>Configuración</h2>
+        </div>
+        <div class="center-block col-8">
+            <form #formul = "ngForm" (ngSubmit)="guardar(formul.value)" id="formul" [formGroup]="formulario">
+                <div class="form-group">
+                    <label for="iva">IVA*</label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="iva" 
+                        placeholder="IVA" 
+                        formControlName="iva" 
+                        [ngClass]="{ 'is-invalid active': submitted && validaF.iva.errors }"
+                    >
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-success botonaction float-right">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

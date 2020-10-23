@@ -1,0 +1,65 @@
+<div class="container" >
+    <div class="row">
+        <div class="col-12 titulo">
+            <h2>{{titulo}}</h2>
+        </div>
+        <div class="center-block col-8">
+            <form #formul = "ngForm" (ngSubmit)="guardar(formul.value)" id="formul" [formGroup]="formulario">
+                <div class="form-group">
+                    <label for="descripcion">Descripción*</label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="descripcion" 
+                        placeholder="Descripción" 
+                        formControlName="descripcion" 
+                        (keypress)="validText.onlyTextKey($event)"
+                        [ngClass]="{ 'is-invalid active': submitted && validaF.descripcion.errors }"
+                    >
+                </div>
+                <div class="form-group">
+                    <label for="modelo">Modelo*</label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="modelo" 
+                        placeholder="Modelo" 
+                        formControlName="modelo" 
+                        [ngClass]="{ 'is-invalid active': submitted && validaF.modelo.errors }"
+                    >
+                </div>
+                <div class="form-group">
+                    <label for="precio">Precio*</label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="precio" 
+                        placeholder="Precio" 
+                        formControlName="precio" 
+                        (keypress)="validText.onlyNumberKey($event)"
+                        [ngClass]="{ 'is-invalid active': submitted && validaF.precio.errors }"
+                    >
+                </div>
+                <div class="form-group">
+                    <label for="existencia">Existencia*</label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="existencia"
+                        placeholder="Existencia" 
+                        formControlName="existencia" 
+                        (keypress)="validText.onlyNumberKey($event)"
+                        [ngClass]="{ 'is-invalid active': submitted && validaF.existencia.errors }"
+                        maxlength="13"
+                    >
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-success botonaction">Guardar</button>
+                    <a routerLink="/articulos">  
+                        <button type="button" class="btn btn-danger float-right botonaction">Cancelar</button>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
